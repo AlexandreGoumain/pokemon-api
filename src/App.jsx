@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DetailOnPokemon from "./Components/DetailOnPokemon";
+import Navbar from "./Components/Navbar";
 import Pagination from "./Components/Pagination";
 import PokemonCard from "./Components/PokemonCard";
 
@@ -60,6 +61,7 @@ export default function App() {
     return (
         <>
             <div className="min-h-screen mx-auto p-4 bg-gray-600">
+                <Navbar />
                 <h1 className="text-4xl font-bold text-center mb-6 text-white">
                     Pokémon Explorer
                 </h1>
@@ -78,7 +80,7 @@ export default function App() {
                 )}
                 {selectedPokemon ? (
                     <>
-                        <div>
+                        <div className="max-w-6xl mx-auto">
                             <DetailOnPokemon
                                 pokemon={selectedPokemon}
                                 onClose={handleCloseDetail}
@@ -88,7 +90,7 @@ export default function App() {
                     </>
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                             {data.results.map((pokemon, index) => (
                                 <PokemonCard
                                     key={index}
