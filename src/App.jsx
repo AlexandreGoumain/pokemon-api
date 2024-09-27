@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import BigTitle from "./Components/BigTitle";
 import DetailOnPokemon from "./Components/DetailOnPokemon";
+import MainDataToPresent from "./Components/MainDataToPresent";
 import Navbar from "./Components/Navbar";
 import Pagination from "./Components/Pagination";
 import PokemonCard from "./Components/PokemonCard";
@@ -62,12 +64,11 @@ export default function App() {
         <>
             <div className="min-h-screen mx-auto p-4 bg-gray-600">
                 <Navbar />
-                <h1 className="text-4xl font-bold text-center mb-6 text-white">
-                    Pokémon Explorer
-                </h1>
-                <p className="text-center mb-4 text-white">
-                    Nombre de Pokémon : {data.count}
-                </p>
+                <BigTitle title="Pokémon Explorer" />
+                <MainDataToPresent
+                    description="Nombre de Pokémon"
+                    data={data}
+                />
                 {!selectedPokemon && (
                     <>
                         <Pagination

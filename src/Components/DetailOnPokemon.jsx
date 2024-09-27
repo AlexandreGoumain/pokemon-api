@@ -93,7 +93,7 @@ const DetailOnPokemon = ({ pokemon, onClose }) => {
                             .join(", ")}
                     >
                         voir les pokemons de la même catégorie :
-                    </a> */}
+                    // </a> */}
                 </div>
             </div>
             <div className="flex justify-center w-full">
