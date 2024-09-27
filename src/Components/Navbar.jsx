@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const links = [
     {
         name: "Home",
@@ -12,12 +14,10 @@ const links = [
         href: "/collections",
     },
     {
-        name: "Contact Us",
-        href: "/contact-us",
+        name: "Contact Me",
+        href: "/contact-me",
     },
 ];
-
-import { useState } from "react";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
