@@ -1,7 +1,24 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { typePokemonBackground } from "../utils/typePokemonBackground";
 
 const DetailOnPokemon = ({ pokemon, onClose }) => {
     const mainType = pokemon.types[0].type.name;
+    const [abilitiesDetails, setAbilitiesDetails] = useState([]);
+
+    useEffect(() => {
+        const fetchAbilitiesDetails = async () => {
+            const abilitiesData = await Promise.all(
+                pokemon.abilities.map(async (a) => {
+                    const response = await axios.get(a.ability.url);
+                    return response.data;
+                })
+            );
+            setAbilitiesDetails(abilitiesData);
+        };
+
+        fetchAbilitiesDetails();
+    }, [pokemon.abilities]);
 
     return (
         <div className="bg-gray-200 p-4 rounded-lg shadow-xl relative max-w-xs mx-auto">
@@ -24,13 +41,31 @@ const DetailOnPokemon = ({ pokemon, onClose }) => {
                 <p className="font-bold">
                     Type: {pokemon.types.map((t) => t.type.name).join(", ")}
                 </p>
-                <p className="font-bold">
+                <p className="font-bold mr-2">
                     Abilities:
                     {pokemon.abilities.map((a) => a.ability.name).join(", ")}
                 </p>
+                <div className="flex flex-col mb-2 bg-gray-300 p-2 rounded-lg">
+                    <p className="font-bold">Abilities Details :</p>
+                    {abilitiesDetails.map((ability) => {
+                        const effectEntry = ability.effect_entries.find(
+                            (entry) => entry.language.name === "en"
+                        );
+                        return effectEntry ? (
+                            <p key={ability.name} className="text-sm my-2">
+                                {effectEntry.effect}
+                            </p>
+                        ) : (
+                            <p key={ability.name} className="text-sm my-2">
+                                Aucun effet trouvé pour cette langue.
+                            </p>
+                        );
+                    })}
+                </div>
+
                 <p className="font-bold">Cries:</p>
                 <ul className="mb-4">
-                    <li>
+                    <li className="mr-2">
                         Latest:{" "}
                         <a
                             href={pokemon.cries.latest}
@@ -51,6 +86,15 @@ const DetailOnPokemon = ({ pokemon, onClose }) => {
                         </a>
                     </li>
                 </ul>
+                <div>
+                    {/* <a
+                        href={pokemon.pokemon_v2_pokemon
+                            .map((p) => p.name)
+                            .join(", ")}
+                    >
+                        voir les pokemons de la même catégorie :
+                    </a> */}
+                </div>
             </div>
             <div className="flex justify-center w-full">
                 <button
