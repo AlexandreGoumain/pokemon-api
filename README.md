@@ -4,12 +4,11 @@
 -   **Détails des Pokémon** : Cliquez sur un Pokémon pour voir ses détails.
 -   **API PokeAPI** : Utilisation de l'API PokeAPI pour récupérer les données des Pokémon.
 
-## Composants
+## Pages
 
--   **App** : gère l'état et la logique de l'application.
--   **Pagination** : navigation entre les pages de Pokémon.
--   **PokemonCard** : affiche un Pokémon individuel.
--   **DetailOnPokemon** : affiche les détails d'un Pokémon sélectionné.
+-   **Home** : accueil
+-   **PokemonList** : sélection du pokemon (Pokémon individuel : PokemonCard)
+-   **DetailOnPokemon** : affiche les détails d'un Pokémon sélectionné (paramètres en url).
 
 ## Installation
 
