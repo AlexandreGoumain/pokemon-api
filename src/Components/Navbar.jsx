@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { changeTheme } from "../app/slices/UiSlice";
 
 const links = [
     {
@@ -6,21 +9,14 @@ const links = [
         href: "/",
     },
     {
-        name: "Catagory",
-        href: "/catagory",
-    },
-    {
-        name: "Collections",
-        href: "/collections",
-    },
-    {
-        name: "Contact Me",
-        href: "/contact-me",
+        name: "Liste des Pokémons",
+        href: "/pokemonList",
     },
 ];
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -28,30 +24,35 @@ export default function Navbar() {
 
     return (
         <>
-            <div className="flex flex-col justify-center max-w-6xl mx-auto">
-                <nav className="flex justify-between bg-gray-700 text-white shadow-xl rounded-md mb-10">
+            <div className="flex flex-col justify-center mx-auto">
+                <nav className="flex justify-between bg-gray-700 text-white shadow-xl">
                     <div className="px-5 xl:px-12 py-6 flex w-full items-center">
-                        <a className="text-3xl font-bold font-heading" href="#">
-                            Pokémon API
-                        </a>
+                        <Link to="/">
+                            <h1 className="text-3xl font-bold font-heading">
+                                Pokémon API
+                            </h1>
+                        </Link>
 
                         <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
                             {links.map((link) => (
                                 <li key={link.name}>
-                                    <a
+                                    <Link
                                         className="hover:text-gray-200"
-                                        href={link.href}
+                                        to={link.href}
                                     >
                                         {link.name}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
+                            <button onClick={() => dispatch(changeTheme())}>
+                                Change Theme
+                            </button>
                         </ul>
 
                         <div className="hidden lg:flex items-center space-x-5 ">
-                            <a
+                            <Link
                                 className="hover:text-gray-200"
-                                href="https://github.com/Sensy-gmn"
+                                to="https://github.com/Sensy-gmn"
                                 target="_blank"
                             >
                                 <svg
@@ -69,12 +70,11 @@ export default function Navbar() {
                                     <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
                                 </span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
-                    <a
+                    <button
                         className="md:hidden flex mr-6 items-center"
-                        href="#"
                         onClick={toggleMenu}
                     >
                         <svg
@@ -91,19 +91,26 @@ export default function Navbar() {
                                 d="M4 6h16M4 12h16M4 18h16"
                             />
                         </svg>
-                    </a>
+                    </button>
                 </nav>
                 {isOpen && (
                     <div className="md:hidden w-1/3 bg-gray-700 text-white rounded-md">
                         <ul className="px-4 font-semibold font-heading space-y-4 ">
                             {links.map((link) => (
                                 <li key={link.name}>
-                                    <a
+                                    <Link
                                         className="hover:text-gray-200"
-                                        href={link.href}
+                                        to={link.href}
                                     >
                                         {link.name}
-                                    </a>
+                                    </Link>
+
+                                    <button
+                                        className="hover:text-gray-200 my-4"
+                                        onClick={() => dispatch(changeTheme())}
+                                    >
+                                        Change Theme
+                                    </button>
                                 </li>
                             ))}
                         </ul>
