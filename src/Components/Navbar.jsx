@@ -12,6 +12,10 @@ const links = [
         name: "Liste des Pokémons",
         href: "/pokemonList",
     },
+    {
+        name: "Liste des voitures",
+        href: "/cars",
+    },
 ];
 
 export default function Navbar() {
