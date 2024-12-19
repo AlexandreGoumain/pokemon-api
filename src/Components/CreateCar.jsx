@@ -1,15 +1,46 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function CreateCar() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    const [car, setCar] = useState(null);
+    const [isEdit, setIsEdit] = useState(false);
     const [brand, setBrand] = useState("");
     const [name, setName] = useState("");
     const [model, setModel] = useState("");
     const [year, setYear] = useState(0);
     const [price, setPrice] = useState(0);
     const [color, setColor] = useState("");
-
     const [userId, setUserId] = useState("");
+
+    useEffect(() => {
+        if (id) {
+            setIsEdit(true);
+            fetchCar();
+        }
+    }, [id]);
+
+    useEffect(() => {
+        if (car) {
+            setBrand(car.brand);
+            setName(car.name);
+            setModel(car.model);
+            setYear(car.year);
+            setPrice(car.price);
+            setColor(car.color);
+            setUserId(car._id);
+        }
+    }, [car]);
+
+    const fetchCar = async () => {
+        const response = await axios.get(
+            `http://localhost:3000/api/cars/${id}`
+        );
+        setCar(response.data);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,18 +55,32 @@ export default function CreateCar() {
             userId,
         };
 
-        axios
-            .post("http://localhost:3000/api/cars", car, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((response) => {
-                console.log("Car created successfully:", response.data);
-            })
-            .catch((error) => {
-                console.error("Error creating car:", error);
-            });
+        if (isEdit) {
+            axios
+                .put(`http://localhost:3000/api/cars/${id}`, car, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then((response) => {
+                    console.log("Car updated successfully:", response.data);
+                });
+        } else {
+            axios
+                .post("http://localhost:3000/api/cars", car, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then((response) => {
+                    console.log("Car created successfully:", response.data);
+                })
+                .catch((error) => {
+                    console.error("Error creating car:", error);
+                });
+        }
+
+        navigate("/cars");
     };
 
     return (
@@ -105,7 +150,11 @@ export default function CreateCar() {
                         onChange={(e) => setUserId(e.target.value)}
                     />
                 </div>
-                <button type="submit">Créer</button>
+                {isEdit ? (
+                    <button type="submit">Modifier</button>
+                ) : (
+                    <button type="submit">Créer</button>
+                )}
             </form>
         </div>
     );

@@ -23,6 +23,10 @@ export default function CarDetails() {
         navigate("/cars");
     };
 
+    const handleEditCar = () => {
+        navigate(`/cars/edit/${id}`);
+    };
+
     useEffect(() => {
         fetchCar();
     }, [id]);
@@ -47,7 +51,10 @@ export default function CarDetails() {
                             <p>Propriétaire: {car.owner.email}</p>
                         </div>
                         <div className="flex justify-center flex-col gap-2">
-                            <button className="bg-blue-500 text-white p-2 rounded-md">
+                            <button
+                                className="bg-blue-500 text-white p-2 rounded-md"
+                                onClick={handleEditCar}
+                            >
                                 Modifier
                             </button>
                             <button

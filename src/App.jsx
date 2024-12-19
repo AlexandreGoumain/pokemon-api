@@ -28,6 +28,7 @@ export default function App() {
 
                         <Route path="/cars" element={<Cars />} />
                         <Route path="/cars/:id" element={<CarDetails />} />
+                        <Route path="/cars/edit/:id" element={<CreateCar />} />
                         <Route path="/cars/create" element={<CreateCar />} />
 
                         <Route path="*" element={<NotFound />} />
